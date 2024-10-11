@@ -1,11 +1,16 @@
 ﻿using CP2.Domain.Interfaces.Dtos;
 using FluentValidation;
+using System;
 
 namespace CP2.Application.Dtos
 {
     public class FornecedorDto : IFornecedorDto
     {
-
+        public string Nome { get; set; }
+        public string CNPJ { get; set; }
+        public string Endereco { get; set; }
+        public string Telefone { get; set; }
+        public string Email { get; set; }
         public DateTime CriadoEm { get; set; }
 
         public void Validate()
@@ -21,7 +26,9 @@ namespace CP2.Application.Dtos
     {
         public FornecedorDtoValidation()
         {
-
+            RuleFor(x => x.Nome).NotEmpty().WithMessage("Digite o nome.");
+            RuleFor(x => x.CNPJ).NotEmpty().WithMessage("Digite o CNPJ.");
+            RuleFor(x => x.Email).EmailAddress().WithMessage("Digite o Email.");
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using CP2.Domain.Entities;
 using CP2.Domain.Interfaces;
 using CP2.Domain.Interfaces.Dtos;
+using System.Collections.Generic;
 
 namespace CP2.Application.Services
 {
@@ -13,9 +14,38 @@ namespace CP2.Application.Services
             _repository = repository;
         }
 
-        public FornecedorEntity? DeletarDadosFornecedor(int id)
+        public FornecedorEntity SalvarDadosFornecedor(IFornecedorDto fornecedorDto)
         {
-            return _repository.DeletarDados(id);
+            fornecedorDto.Validate();
+
+            var fornecedorEntity = new FornecedorEntity
+            {
+                Nome = fornecedorDto.Nome,
+                CNPJ = fornecedorDto.CNPJ,
+                Endereco = fornecedorDto.Endereco,
+                Telefone = fornecedorDto.Telefone,
+                Email = fornecedorDto.Email,
+                CriadoEm = DateTime.Now
+            };
+
+            return _repository.SalvarDados(fornecedorEntity);
+        }
+
+        public FornecedorEntity EditarDadosFornecedor(int id, IFornecedorDto fornecedorDto)
+        {
+            fornecedorDto.Validate();
+
+            var fornecedorEntity = new FornecedorEntity
+            {
+                Nome = fornecedorDto.Nome,
+                CNPJ = fornecedorDto.CNPJ,
+                Endereco = fornecedorDto.Endereco,
+                Telefone = fornecedorDto.Telefone,
+                Email = fornecedorDto.Email
+                // Não atualizamos CriadoEm no Editar
+            };
+
+            return _repository.EditarDados(id, fornecedorEntity);
         }
 
         public FornecedorEntity? ObterFornecedorPorId(int id)
@@ -23,5 +53,14 @@ namespace CP2.Application.Services
             return _repository.ObterPorId(id);
         }
 
+        public IEnumerable<FornecedorEntity> ObterTodosFornecedores()
+        {
+            return _repository.ObterTodos();
+        }
+
+        public FornecedorEntity? DeletarDadosFornecedor(int id)
+        {
+            return _repository.DeletarDados(id);
+        }
     }
 }

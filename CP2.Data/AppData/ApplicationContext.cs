@@ -10,8 +10,7 @@ namespace CP2.Data.AppData
 
         }
 
-        public DbSet<FornecedorEntity> Fornecedor { get; set; }
-        public DbSet<VendedorEntity> Vendedor { get; set; }
-
+        public DbSet<FornecedorEntity> Fornecedores { get; set; }
+        public DbSet<VendedorEntity> Vendedores { get; set; }
     }
 }
